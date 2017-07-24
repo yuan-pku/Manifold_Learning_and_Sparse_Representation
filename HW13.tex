@@ -1,0 +1,146 @@
+\documentclass{article}
+
+\usepackage{fancyhdr}
+\usepackage{extramarks}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{tikz}
+\usepackage[plain]{algorithm}
+\usepackage{algpseudocode}
+
+%
+% Basic Document Settings
+%
+
+\topmargin=-0.45in
+\evensidemargin=0in
+\oddsidemargin=0in
+\textwidth=6.5in
+\textheight=9.0in
+\headsep=0.25in
+
+\linespread{1.2}
+
+\pagestyle{fancy}
+\rhead{\hmwkAuthorName}
+\lhead{\hmwkClass: \hmwkTitle}
+
+
+\renewcommand\headrulewidth{0.4pt}
+\renewcommand\footrulewidth{0.4pt}
+\renewcommand{\proofname}{\textit{\textbf{ Proof.}}}
+
+% \setlength\parindent{0pt}
+
+%
+% Create Problem Sections
+%
+
+\newcommand{\enterProblemHeader}[1]{
+    \nobreak\extramarks{}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+    \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+}
+
+\newcommand{\exitProblemHeader}[1]{
+    \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+    \stepcounter{#1}
+    \nobreak\extramarks{Problem \arabic{#1}}{}\nobreak{}
+}
+
+\setcounter{secnumdepth}{0}
+\newcounter{partCounter}
+\newcounter{homeworkProblemCounter}
+\setcounter{homeworkProblemCounter}{1}
+\nobreak\extramarks{Problem \arabic{homeworkProblemCounter}}{}\nobreak{}
+
+%
+% Homework Problem Environment
+%
+% This environment takes an optional argument. When given, it will adjust the
+% problem counter. This is useful for when the problems given for your
+% assignment aren't sequential. See the last 3 problems of this template for an
+% example.
+%
+\newenvironment{homeworkProblem}[1][-1]{
+    \ifnum#1>0
+        \setcounter{homeworkProblemCounter}{#1}
+    \fi
+    \section{Problem \arabic{homeworkProblemCounter}}
+    \setcounter{partCounter}{1}
+    \enterProblemHeader{homeworkProblemCounter}
+}{
+    \exitProblemHeader{homeworkProblemCounter}
+}
+
+
+\newcommand{\hmwkTitle}{Assignment 13}
+\newcommand{\hmwkClass}{Manifold Learning and Sparse Representation}
+\newcommand{\hmwkAuthorName}{\textbf{ZHANG Yuan}, 1601111332 }
+\date{}
+%
+% Title Page
+%
+
+\title{
+    \textmd{\textbf{\hmwkClass:\ \hmwkTitle}}\\
+}
+
+\author{\hmwkAuthorName}
+
+\renewcommand{\part}[1]{\textbf{\large Part \Alph{partCounter}}\stepcounter{partCounter}\\}
+
+%
+% Various Helper Commands
+%
+
+% Useful for algorithms
+\newcommand{\alg}[1]{\textsc{\bfseries \footnotesize #1}}
+
+% For derivatives
+\newcommand{\deriv}[1]{\frac{\mathrm{d}}{\mathrm{d}x} (#1)}
+
+% For partial derivatives
+\newcommand{\pderiv}[2]{\frac{\partial}{\partial #1} (#2)}
+
+% Integral dx
+\newcommand{\dx}{\mathrm{d}x}
+
+% Alias for the Solution section header
+\newcommand{\solution}{\textbf{\large Solution}}
+
+% Probability commands: Expectation, Variance, Covariance, Bias
+\newcommand{\E}{\mathrm{E}}
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\Cov}{\mathrm{Cov}}
+\newcommand{\Bias}{\mathrm{Bias}}
+
+\begin{document}
+
+\maketitle
+
+\section{Exercise 250.}
+\begin{proof}
+An easier proof than ref. [312] is offered as follows:
+
+Obviously, the objective function is strictly convex with regard to $Z$. Thus, there exists a unique minimizer and we only have to verify that Eq. (11.2) is a minimizer. 
+
+We know that $\hat{Z} = U\Sigma_{\lambda}U^{T}$ is a minimizer iff. 
+
+$$
+0 \in \partial(\frac{1}{2}\Vert \phi(D) - \phi(D)\hat{Z} \Vert_F^2 + \lambda\Vert \hat{Z} \Vert_{*}) \Leftrightarrow \frac{1}{\lambda}K(I - \hat{Z}) \in   \partial \Vert  \hat{Z} \Vert_{*},
+$$
+where $K = \phi(D)\phi(D)^{T} = U \Sigma U^{T}$. This proposition holds due to the following fact
+\begin{align*}
+    \frac{1}{\lambda}K(I - \hat{Z}) &=\frac{1}{\lambda} U \Sigma U^{T} ( I - U\Sigma_{\lambda}U^{T}) \\
+    &=  \frac{1}{\lambda} U \Sigma (I - \Sigma_{\lambda}) U^{T} \\
+    &= \frac{1}{\lambda} U \Sigma \text{diag}(\{\frac{\lambda}{\sigma_i}\vert \sigma_i > \lambda\},I) U^{T} \\
+    &= U \text{diag}(I,\{\frac{\sigma_i}{\lambda}\vert \sigma_i \leq \lambda \}) U^T \\
+    &= U_0U_0^{T} + U_1 W U_1^T,
+\end{align*}
+where $W = \text{diag}(\{\frac{\sigma_i}{\lambda}\vert \sigma_i \leq \lambda \}) = \text{diag}(\{\frac{\sigma_i}{\lambda}\vert \frac{\sigma_i}{\lambda} \leq 1 \})$ and $U_0$ ($U1$) consists of eigenvectors corresponding to those eigen-values that are larger (less) than $\lambda$. We can verify that $\Vert W \Vert_2 \leq 1$ and hence $\frac{1}{\lambda}K(I - \hat{Z}) \in   \partial \Vert  \hat{Z} \Vert_{*}$ thanks to Theorem 126.
+\end{proof}
+
+\end{document}
+

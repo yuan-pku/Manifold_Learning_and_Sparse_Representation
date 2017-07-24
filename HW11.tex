@@ -1,0 +1,210 @@
+\documentclass{article}
+
+\usepackage{fancyhdr}
+\usepackage{extramarks}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{tikz}
+\usepackage[plain]{algorithm}
+\usepackage{algpseudocode}
+
+%
+% Basic Document Settings
+%
+
+\topmargin=-0.45in
+\evensidemargin=0in
+\oddsidemargin=0in
+\textwidth=6.5in
+\textheight=9.0in
+\headsep=0.25in
+
+\linespread{1.2}
+
+\pagestyle{fancy}
+\rhead{\hmwkAuthorName}
+\lhead{\hmwkClass: \hmwkTitle}
+
+
+\renewcommand\headrulewidth{0.4pt}
+\renewcommand\footrulewidth{0.4pt}
+\renewcommand{\proofname}{\textit{\textbf{ Proof.}}}
+
+% \setlength\parindent{0pt}
+
+%
+% Create Problem Sections
+%
+
+\newcommand{\enterProblemHeader}[1]{
+    \nobreak\extramarks{}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+    \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+}
+
+\newcommand{\exitProblemHeader}[1]{
+    \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+    \stepcounter{#1}
+    \nobreak\extramarks{Problem \arabic{#1}}{}\nobreak{}
+}
+
+\setcounter{secnumdepth}{0}
+\newcounter{partCounter}
+\newcounter{homeworkProblemCounter}
+\setcounter{homeworkProblemCounter}{1}
+\nobreak\extramarks{Problem \arabic{homeworkProblemCounter}}{}\nobreak{}
+
+%
+% Homework Problem Environment
+%
+% This environment takes an optional argument. When given, it will adjust the
+% problem counter. This is useful for when the problems given for your
+% assignment aren't sequential. See the last 3 problems of this template for an
+% example.
+%
+\newenvironment{homeworkProblem}[1][-1]{
+    \ifnum#1>0
+        \setcounter{homeworkProblemCounter}{#1}
+    \fi
+    \section{Problem \arabic{homeworkProblemCounter}}
+    \setcounter{partCounter}{1}
+    \enterProblemHeader{homeworkProblemCounter}
+}{
+    \exitProblemHeader{homeworkProblemCounter}
+}
+
+
+\newcommand{\hmwkTitle}{Assignment 11}
+\newcommand{\hmwkClass}{Manifold Learning and Sparse Representation}
+\newcommand{\hmwkAuthorName}{\textbf{ZHANG Yuan}, 1601111332 }
+\date{}
+%
+% Title Page
+%
+
+\title{
+    \textmd{\textbf{\hmwkClass:\ \hmwkTitle}}\\
+}
+
+\author{\hmwkAuthorName}
+
+\renewcommand{\part}[1]{\textbf{\large Part \Alph{partCounter}}\stepcounter{partCounter}\\}
+
+%
+% Various Helper Commands
+%
+
+% Useful for algorithms
+\newcommand{\alg}[1]{\textsc{\bfseries \footnotesize #1}}
+
+% For derivatives
+\newcommand{\deriv}[1]{\frac{\mathrm{d}}{\mathrm{d}x} (#1)}
+
+% For partial derivatives
+\newcommand{\pderiv}[2]{\frac{\partial}{\partial #1} (#2)}
+
+% Integral dx
+\newcommand{\dx}{\mathrm{d}x}
+
+% Alias for the Solution section header
+\newcommand{\solution}{\textbf{\large Solution}}
+
+% Probability commands: Expectation, Variance, Covariance, Bias
+\newcommand{\E}{\mathrm{E}}
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\Cov}{\mathrm{Cov}}
+\newcommand{\Bias}{\mathrm{Bias}}
+
+\begin{document}
+
+\maketitle
+\section{Exercise 194.}
+\begin{proof}
+Prove by verifying the following:
+\begin{itemize}
+    \item By definition, $$\Omega_{overlap}^{G}(w) = \inf_{v\in V_{G}, \sum_{g\in G}v_g=w}\sum_{g\in G}\Vert v_g \Vert \geq 0,$$ and the equation holds iff. there exists a $v$ such that $\Vert v_g\Vert =0$ for each $g$, which deduces to $v_g = 0$, and hence iff. $w = \sum_{g\in G} v_g   = 0$;
+    \item By definition,$$\Omega_{overlap}^{G}(\alpha w) = \inf_{v\in V_{G}, \sum_{g\in G}v_g= \alpha w}\sum_{g\in G}\Vert v_g \Vert = \alpha \inf_{v\in V_{G}, \sum_{g\in G}\frac{1}{\alpha} v_g =  w} \sum_{g\in G} \Vert \frac{1}{\alpha} v_g \Vert = \alpha \Omega_{overlap}^{G}(w);$$
+    \item We have
+    \begin{align*}
+        \Omega_{overlap}^{G}(w_1) + \Omega_{overlap}^{G}(w_2) & = \inf_{v_{1}\in V_{G}, \sum_{g\in G}v_{1,g}=w_1}\sum_{g\in G}\Vert v_{1,g} \Vert + \inf_{v_{2}\in V_{G}, \sum_{g\in G}v_{2,g}=w_2}\sum_{g\in G}\Vert v_{2,g} \Vert \\
+        & = \inf_{v_{1}\in V_{G}, v_{2}\in V_{G}, \sum_{g\in G}v_{g,1}=w_1 ,\sum_{g\in G}v_{g,2}=w_2} \sum_{g\in G} (\Vert v_{1,g} \Vert + \Vert v_{2,g} \Vert) \\
+        &\geq \inf_{v_{1}\in V_{G}, v_{2}\in V_{G}, \sum_{g\in G}v_{g,1}=w_1 ,\sum_{g\in G}v_{g,2}=w_2} \sum_{g\in G} \Vert v_{1,g} + v_{2,g} \Vert \\
+        & = \inf_{v_{1}+v_{2}\in V_{G}, \sum_{g\in G}v_{g,1}=w_1 ,\sum_{g\in G}v_{g,2}=w_2} \sum_{g\in G} \Vert v_{1,g} + v_{2,g} \Vert \\
+        &\geq \inf_{v\in V_{G}, \sum_{g\in G}v=w_1+w_2} \sum_{g\in G} \Vert v \Vert = \Omega_{overlap}^{G}(w_1 + w_2),
+    \end{align*}
+    where the last inequality holds thanks to the fact that $v_{1} + v_{2} \in G $ and $\sum_{g\in G}v_{g,1} + v_{g,2} = w_1 + w_2 $.    
+\end{itemize}
+\end{proof}
+\section{Exercise 195.}
+\begin{proof}
+According to Cauchy-Schwarz's inequality, assuming $\Vert \alpha_g \Vert \leq 1$,
+\begin{align*}
+    \alpha^{T} w  = \alpha^{T} \sum_g v_g &= \sum_g \alpha_g^{T} v_g \\
+    & \leq \sum_g \Vert \alpha_g \Vert \cdot \Vert v_g \Vert \\
+    & \leq \sum_g \Vert v_g \Vert,
+\end{align*}
+Thus, 
+\begin{align*}
+   \Omega_{overlap}^{G}(w) = \inf_{v\in V_{G}, \sum_{g\in G}v_g=w}\sum_{g\in G}\Vert v_g \Vert \geq \sup_{\alpha}\{\alpha^{T}w\vert\Vert \alpha_g \Vert \leq 1 \},
+\end{align*}
+where the equation can be obtained when $v_g$ and $\alpha_g$ are linear dependent (a special case of which is nonoverlapping $\{v_g\}$ with corresponding $\alpha$). 
+\end{proof}
+
+\section{Exercise 196.}
+Suppose we have $F$ levels of frequencies, i.e., $F$ anti-diagonals. We can use the following penalty term,
+$$
+\sum_{f = 1}^{F}\Vert \{D_{i,j}\vert i + j \leq f\} \Vert.
+$$
+That is, for each $f$, we sum up all the entries that is upper left to the $f$-th anti-diagonal.
+
+\section{Exercise 197.}
+Because when there is overlapping between groups, the covariates that belong to multiple groups are penalized multiple times in the group lasso penalty and hence only the sparsity of non-overlapping covariates (i.e., $w_1,w_3$). 
+
+On the contrary, the overlapping penalty is able to encourage sparsity of each group of covariates by decomposing the overlapping part (i.e., $w_2$) into their corresponding groups. 
+
+\section{Exercise 200.}
+\begin{proof}
+According to Proposition 199,
+$$
+Z^{*} = VV_O^{T}= \begin{bmatrix}
+    V_O \\
+    V_H
+    \end{bmatrix} \cdot V_O^{T} =  \begin{bmatrix}
+    V_OV_O^{T} \\
+    V_HV_O^{T}
+    \end{bmatrix}.
+$$
+Then plug into Eq. (10.19),
+\begin{align*}
+    D &= 
+    \begin{bmatrix}
+    D & D_H
+    \end{bmatrix} \cdot
+    \begin{bmatrix}
+    V_OV_O^{T} \\
+    V_HV_O^{T}
+    \end{bmatrix} \\
+    &= DV_OV_O^{T} + D_HV_HV_O^{T} \\
+    &= DV_OV_O^{T} + D_HV_H \Sigma^{\dag} U^{T} (U \Sigma V_O^{T}) \\
+    &= DV_OV_O^{T} + D_HV_H \Sigma^{\dag} U^{T} D \\
+    & = DZ*_{O\vert H} + L^{*}_{H\vert O}D,
+\end{align*}
+where $Z^*_{O\vert H} \triangleq V_OV_O^{T}$ and $L^{*}_{H\vert O} = D_HV_H \Sigma^{\dag} U^{T}$ (note that typically $\Sigma$ is not full rank, otherwise $L^{*} = I$).
+\end{proof}
+
+\section{Exercise 202.}
+\begin{proof}
+Prove by verifying the following:
+\begin{itemize}
+\item By definition, $\Vert D \text{Diag}(w) \Vert_{*} \geq 0$. The equation holds iff. $D\text{Diag}(w) = 0$, which is equivalent to $D_{:i}w_i = 0$ for each $i$, that is, $w = 0$ because none of $D_{:i} = 0$;
+\item $\Vert D \text{Diag}(\alpha w) \Vert_{*}= \Vert \alpha D \text{Diag}( w) \Vert_{*} =  \alpha \Vert D \text{Diag}( w) \Vert_{*}$;
+\item Thanks to the definition of norms,
+\begin{align*}
+    \Vert D \text{Diag}(w_1 + w_2) \Vert_{*} & = \Vert D \text{Diag}(w_1) + D \text{Diag}(w_2) \Vert_{*} \\
+                                             & \leq \Vert D \text{Diag}(w_1)\Vert_{*} + \Vert D \text{Diag}(w_2) \Vert_{*}
+\end{align*}
+\end{itemize}
+\end{proof}
+
+\end{document}

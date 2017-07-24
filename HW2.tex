@@ -1,0 +1,270 @@
+\documentclass{article}
+
+\usepackage{fancyhdr}
+\usepackage{extramarks}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{tikz}
+\usepackage[plain]{algorithm}
+\usepackage{algpseudocode}
+
+%
+% Basic Document Settings
+%
+
+\topmargin=-0.45in
+\evensidemargin=0in
+\oddsidemargin=0in
+\textwidth=6.5in
+\textheight=9.0in
+\headsep=0.25in
+
+\linespread{1.2}
+
+\pagestyle{fancy}
+\rhead{\hmwkAuthorName}
+\lhead{\hmwkClass: \hmwkTitle}
+
+
+\renewcommand\headrulewidth{0.4pt}
+\renewcommand\footrulewidth{0.4pt}
+\renewcommand{\proofname}{\textit{\textbf{ Proof.}}}
+
+% \setlength\parindent{0pt}
+
+%
+% Create Problem Sections
+%
+
+\newcommand{\enterProblemHeader}[1]{
+    \nobreak\extramarks{}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+    \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+}
+
+\newcommand{\exitProblemHeader}[1]{
+    \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+    \stepcounter{#1}
+    \nobreak\extramarks{Problem \arabic{#1}}{}\nobreak{}
+}
+
+\setcounter{secnumdepth}{0}
+\newcounter{partCounter}
+\newcounter{homeworkProblemCounter}
+\setcounter{homeworkProblemCounter}{1}
+\nobreak\extramarks{Problem \arabic{homeworkProblemCounter}}{}\nobreak{}
+
+%
+% Homework Problem Environment
+%
+% This environment takes an optional argument. When given, it will adjust the
+% problem counter. This is useful for when the problems given for your
+% assignment aren't sequential. See the last 3 problems of this template for an
+% example.
+%
+\newenvironment{homeworkProblem}[1][-1]{
+    \ifnum#1>0
+        \setcounter{homeworkProblemCounter}{#1}
+    \fi
+    \section{Problem \arabic{homeworkProblemCounter}}
+    \setcounter{partCounter}{1}
+    \enterProblemHeader{homeworkProblemCounter}
+}{
+    \exitProblemHeader{homeworkProblemCounter}
+}
+
+
+\newcommand{\hmwkTitle}{Assignment 2}
+\newcommand{\hmwkClass}{Manifold Learning and Sparse Representation}
+\newcommand{\hmwkAuthorName}{\textbf{ZHANG Yuan}, 1601111332 }
+\date{}
+%
+% Title Page
+%
+
+\title{
+    \textmd{\textbf{\hmwkClass:\ \hmwkTitle}}\\
+}
+
+\author{\hmwkAuthorName}
+
+\renewcommand{\part}[1]{\textbf{\large Part \Alph{partCounter}}\stepcounter{partCounter}\\}
+
+%
+% Various Helper Commands
+%
+
+% Useful for algorithms
+\newcommand{\alg}[1]{\textsc{\bfseries \footnotesize #1}}
+
+% For derivatives
+\newcommand{\deriv}[1]{\frac{\mathrm{d}}{\mathrm{d}x} (#1)}
+
+% For partial derivatives
+\newcommand{\pderiv}[2]{\frac{\partial}{\partial #1} (#2)}
+
+% Integral dx
+\newcommand{\dx}{\mathrm{d}x}
+
+% Alias for the Solution section header
+\newcommand{\solution}{\textbf{\large Solution}}
+
+% Probability commands: Expectation, Variance, Covariance, Bias
+\newcommand{\E}{\mathrm{E}}
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\Cov}{\mathrm{Cov}}
+\newcommand{\Bias}{\mathrm{Bias}}
+
+\begin{document}
+
+\maketitle
+
+%\pagebreak
+\section{Exercise 24.}
+
+\subsection{1. $\Vert\cdot\Vert^{*}_p=\Vert\cdot\Vert_q$, where $p^{-1}+q^{-1} = 1$.}
+\begin{proof}
+By definition, $\Vert \mathbf{x} \Vert^{*}_p = \sup\{\langle \mathbf{x,y} \rangle|\Vert \mathbf{y} \Vert_p \leq 1\}$ for any vector $\mathbf x$. Thanks to Holder's inequality, 
+$$
+\langle \mathbf{x,y} \rangle \leq \Vert \mathbf x \Vert_p \Vert \mathbf y \Vert_q \leq \Vert \mathbf x \Vert_p,
+$$
+where $p^{-1}+q^{-1} = 1$ and it becomes an equality if and only if $\forall i:(\sum_j{x_j^q}) y_i^p = x_i^q$  such that the vector $\mathbf y$ always exists for any given vector $\mathbf x$. Thus, $\Vert \mathbf{x} \Vert^{*}_p = \sup\{\langle \mathbf{x,y} \rangle|\Vert \mathbf{y} \Vert_p \leq 1\} = \Vert \mathbf x \Vert_q$.
+\end{proof} 
+\subsection{2. $\Vert\cdot\Vert^{*}_2 = \Vert\cdot\Vert_{*}$.}
+\begin{proof}
+When $\Vert \mathbf{Y} \Vert_2 \leq 1$ which implies $\max_i\sigma_i(Y) \leq 1$, we use the von Neumann theorem
+$$
+\langle \mathbf{X,Y} \rangle \leq \sum_i^{\min(m,n)}\sigma_i(\mathbf X)\sigma_i(\mathbf Y) \leq \sum_i^{\min(m,n)}\sigma_i(\mathbf X) = \Vert \mathbf X \Vert_{*}.
+$$
+On the other hand, when $Y = I$,
+$$
+\langle \mathbf{X,Y} \rangle = tr(\mathbf X) = \sum_i^{\min(m,n)}\sigma_i(\mathbf X) = \Vert \mathbf X \Vert_{*}.
+$$
+Thus, by definition, $\Vert X\Vert^{*}_2 = \sup\{\langle \mathbf{X,Y} \rangle|\Vert \mathbf{Y} \Vert_2 \leq 1\} = \Vert \mathbf X \Vert_{*}$. 
+\end{proof}
+\subsection{3. $\Vert\cdot\Vert^{*}_F = \Vert\cdot\Vert_{F}$.}
+\begin{proof}
+When $\Vert \mathbf{Y} \Vert_F \leq 1$, we have the following thanks to the Cauchy-Schwarz inequality,
+$$
+\langle \mathbf{X,Y} \rangle =  \sum_{i,j} x_{ij}y_{ij}  
+\leq \sqrt{\sum_{ij}x_{ij}^2\sum_{ij}y_{ij}^2} = \Vert X\Vert_{F} \Vert Y\Vert_{F} = \Vert X\Vert_{F}
+$$
+where the equality holds when $\forall i,j: y_{ij} = x_{ij}/\sum_j{x_{ij}},$ (we define $y_{ij} = 0$ when $\sum_j{x_{ij}} = 0$). Therefore,  $\Vert X\Vert^{*}_F = \sup\{\langle \mathbf{X,Y} \rangle|\Vert \mathbf{Y} \Vert_F \leq 1\} =\Vert X\Vert_{F}$.
+\end{proof}
+\section{Exercise 28}
+\subsection{1. $\frac{\partial\mathbf{XY}}{\partial t} = \frac{\partial \mathbf{X}}{\partial t}\mathbf{Y} + \frac{\partial \mathbf{Y}}{\partial t}\mathbf{X}$.}
+\begin{proof}
+\begin{align*}
+    (\frac{\partial\mathbf{XY}}{\partial t})_{ij} &=  \frac{\partial(\mathbf{XY})_{ij}}{\partial t}
+    =  \frac{\partial \sum_{k}x_{ik}y_{kj}}{\partial t}
+    =  \sum_{k} \frac{\partial x_{ik}y_{kj}}{\partial t} \\
+    &=  \sum_{k} \frac{\partial x_{ik}}{\partial t}y_{kj}  + \frac{\partial x_{ik}y_{kj}}{\partial t}x_{ik}\\
+    &= \sum_{k} (\frac{\partial \mathbf X}{\partial t})_{ik}\cdot y_{kj} + \sum_{k} x_{ik}\cdot(\frac{\partial \mathbf Y}{\partial t})_{kj}\\
+    &= (\frac{\partial \mathbf X}{\partial t}\mathbf Y)_{ij} + (\mathbf X \frac{\partial \mathbf Y}{\partial t})_{ij}\\
+    &= (\frac{\partial \mathbf X}{\partial t}\mathbf Y+\mathbf X \frac{\partial \mathbf Y}{\partial t})_{ij}
+\end{align*}
+\end{proof}
+
+\subsection{2. $\frac{\partial \mathbf{a^Tx}}{\partial \mathbf x} = \mathbf a$.}
+\begin{proof}
+\begin{align*}
+    (\frac{\partial \mathbf{a^Tx}}{\partial \mathbf x})_{i} = 
+    \frac{\partial\sum_j a_jx_j}{\partial x_i} = a_i
+\end{align*}
+\end{proof}
+
+\subsection{3. $\mathbf{\frac{\partial x^TAx}{\partial x} = (A+A^T)x}$}
+\begin{proof}
+\begin{align*}
+    (\mathbf{\frac{\partial x^TAx}{\partial x}})_{i} &= 
+   \frac{\partial\sum_j (a_{ij} x_ix_j + a_{ji} x_jx_i)}{\partial x_i} = \sum_j a_{ij}x_j + \sum_j a_{ji}x_j \\
+   &= (\mathbf{Ax})_i + (\mathbf{A^Tx})_i
+   = (\mathbf{(A+A^T)x})_i
+\end{align*}
+\end{proof}
+
+\subsection{4. calculate $\frac{\partial\mathbf X}{\partial\mathbf X}$, assuming $\mathbf X \in \mathbb{R}^{m\times n}$.}
+\begin{align*}
+\frac{\partial\mathbf X}{\partial\mathbf X}& = 
+\begin{pmatrix}
+\frac{\partial \mathbf X}{\partial x_{11}}&\cdots&\frac{\partial \mathbf X}{\partial x_{1n}}\\
+\vdots&\ddots&\vdots \\
+\frac{\partial \mathbf X}{\partial x_{m1}}&\cdots&\frac{\partial \mathbf X}{\partial x_{mn}}\\
+\end{pmatrix}
+=
+\begin{pmatrix}
+\mathbf{e_1 e_{1}^{'T}}&\cdots&\mathbf{e_1 e^{'T}_{n}}\\
+\vdots&\ddots&\vdots \\
+\mathbf{e_m e_{1}^{'T}}&\cdots&\mathbf{e_m e_{n}^{'T}}\\
+\end{pmatrix}
+=
+\begin{pmatrix}
+\mathbf{e_1(e_{1}^{'T},\ \cdots\ ,e_{n}^{'T})}\\
+\vdots\\
+\mathbf{e_m(e_{1}^{'T},\ \cdots\ ,e_{n}^{'T})}\\
+\end{pmatrix}\\
+&=
+\begin{pmatrix}
+\mathbf{e_1}\\
+\vdots\\
+\mathbf{e_m}
+\end{pmatrix}
+\begin{pmatrix}
+\mathbf{e_{1}^{'T}}&\cdots&\mathbf{e_{n}^{'T}}
+\end{pmatrix}
+= vec(\mathbf I_{m\times m})\cdot vec(\mathbf I_{n\times n})^{T}
+\end{align*}
+where indicator vectors $\mathbf e_i \in \mathbb R^{m}$ and $\mathbf e_i \in \mathbb R^{n}$.
+\section{Exercise 29.}
+By definition, for any $x\in \mathbb R$ and $\mathbf Y \in \mathbb R^{3 \times 3}$
+\begin{align*}
+\langle \mathcal A^{*}(x), \mathbf Y \rangle = \langle x,\mathcal A(\mathbf Y)\rangle
+&= \langle x, Y_{11}+ Y_{12} - Y_{3,1} + 2Y_{33} \rangle\\
+&= x\cdot(Y_{11}+ Y_{12} - Y_{3,1} + 2Y_{33})\\
+&= \langle 
+\begin{pmatrix}
+x&x&0\\
+0&0&0\\
+-x&0&2x\\
+\end{pmatrix},
+Y
+\rangle. 
+\end{align*}
+Therefore, $\mathcal A^{*}(x)= 
+\begin{pmatrix}
+x&x&0\\
+0&0&0\\
+-x&0&2x\\
+\end{pmatrix}
+$.
+\section{Exercise 33.}
+\begin{proof}
+Suppose $K \in \mathbb R^{n\times n}$ and $Y \in \mathbb R^{r\times n}$. We denote $t = -\min_{i}(\lambda_i(\mathbf K))$ and then $\mathbf K+t\mathbf I$ is positive semi-definite with equivalent eigenvalues and singular values, i.e., $\lambda_{i}=\sigma_i$.
+\begin{align*}
+tr(\mathbf{YKY^{T}}) &= tr(\mathbf{Y(K}+t\mathbf{I}- t \mathbf{I)Y^{T}}) = tr(\mathbf{Y(K}+t\mathbf{I)}Y^{T}) - tr(t\mathbf{I}) \\
+&= tr(\mathbf{Y^{T}Y(K}+t\mathbf{I)}) - rt,
+\end{align*}
+According to the von Neumann trace inequality,
+$$
+\sum_{i=1}^{n}\sigma_{i}(\mathbf{Y^TY})\sigma_{n-i+1}(\mathbf{K}+t\mathbf{I}) \leq tr(\mathbf{Y^{T}Y(K}+t\mathbf{I)}) \leq \sum_{i=1}^{n}\sigma_i(\mathbf{Y^TY})\sigma_i(\mathbf{K}+t\mathbf{I})
+$$
+
+$$
+\sum_{i=1}^{r}\sigma_{i}(\mathbf{YY^T})\sigma_{n-i+1}(\mathbf{K}+t\mathbf{I}) \leq tr(\mathbf{Y^{T}Y(K}+t\mathbf{I})) \leq \sum_{i=1}^{r}\sigma_i(\mathbf{YY^T})\sigma_i(\mathbf{K}+t\mathbf{I}) 
+$$
+$$
+\sum_{i=1}^{r}\sigma_{i}(\mathbf{I})\lambda_{n-i+1}(\mathbf{K}+t\mathbf{I}) \leq tr(\mathbf{Y^{T}Y(K}+t\mathbf{I})) \leq \sum_{i=1}^{r}\sigma_i(\mathbf{I})\lambda_i(\mathbf{K}+t\mathbf{I})
+$$
+$$
+\sum_{i=1}^{r}\lambda_{n-i+1}(\mathbf{K})+rt \leq tr(\mathbf{Y^{T}Y(K}+t\mathbf{I})) \leq \sum_{i=1}^{r}\lambda_i(\mathbf{K})+ rt 
+$$
+$$
+\sum_{i=1}^{r}\lambda_{n-i+1}(\mathbf{K}) \leq tr(\mathbf{Y^{T}Y(K}+t\mathbf{I}))-rt\leq \sum_{i=1}^{r}\lambda_i(\mathbf{K})
+$$
+$$
+\sum_{i=1}^{r}\lambda_{n-i+1}(\mathbf{K}) \leq tr(\mathbf{YKY^{T}})\leq \sum_{i=1}^{r}\lambda_i(\mathbf{K})
+$$
+We note that the first and second equalities hold iff. Y are the tailing and leading eigenvectors of $\mathbf{K}$ associated with the largest and smallest $r$ eigenvalues. Therefore, the solutions to $\min_{\mathbf Y}tr(\mathbf{YKY^{T}})$ and $\max_{\mathbf Y}tr(\mathbf{YKY^{T}})$ correspond to the tailing and leading eigenvectors of $\mathbf{K}$, respectively.
+\end{proof}
+\end{document}

@@ -1,0 +1,246 @@
+\documentclass{article}
+
+\usepackage{fancyhdr}
+\usepackage{extramarks}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{tikz}
+\usepackage[plain]{algorithm}
+\usepackage{algpseudocode}
+
+%
+% Basic Document Settings
+%
+
+\topmargin=-0.45in
+\evensidemargin=0in
+\oddsidemargin=0in
+\textwidth=6.5in
+\textheight=9.0in
+\headsep=0.25in
+
+\linespread{1.2}
+
+\pagestyle{fancy}
+\rhead{\hmwkAuthorName}
+\lhead{\hmwkClass: \hmwkTitle}
+
+
+\renewcommand\headrulewidth{0.4pt}
+\renewcommand\footrulewidth{0.4pt}
+\renewcommand{\proofname}{\textit{\textbf{ Proof.}}}
+
+% \setlength\parindent{0pt}
+
+%
+% Create Problem Sections
+%
+
+\newcommand{\enterProblemHeader}[1]{
+    \nobreak\extramarks{}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+    \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+}
+
+\newcommand{\exitProblemHeader}[1]{
+    \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+    \stepcounter{#1}
+    \nobreak\extramarks{Problem \arabic{#1}}{}\nobreak{}
+}
+
+\setcounter{secnumdepth}{0}
+\newcounter{partCounter}
+\newcounter{homeworkProblemCounter}
+\setcounter{homeworkProblemCounter}{1}
+\nobreak\extramarks{Problem \arabic{homeworkProblemCounter}}{}\nobreak{}
+
+%
+% Homework Problem Environment
+%
+% This environment takes an optional argument. When given, it will adjust the
+% problem counter. This is useful for when the problems given for your
+% assignment aren't sequential. See the last 3 problems of this template for an
+% example.
+%
+\newenvironment{homeworkProblem}[1][-1]{
+    \ifnum#1>0
+        \setcounter{homeworkProblemCounter}{#1}
+    \fi
+    \section{Problem \arabic{homeworkProblemCounter}}
+    \setcounter{partCounter}{1}
+    \enterProblemHeader{homeworkProblemCounter}
+}{
+    \exitProblemHeader{homeworkProblemCounter}
+}
+
+
+\newcommand{\hmwkTitle}{Assignment 8}
+\newcommand{\hmwkClass}{Manifold Learning and Sparse Representation}
+\newcommand{\hmwkAuthorName}{\textbf{ZHANG Yuan}, 1601111332 }
+\date{}
+%
+% Title Page
+%
+
+\title{
+    \textmd{\textbf{\hmwkClass:\ \hmwkTitle}}\\
+}
+
+\author{\hmwkAuthorName}
+
+\renewcommand{\part}[1]{\textbf{\large Part \Alph{partCounter}}\stepcounter{partCounter}\\}
+
+%
+% Various Helper Commands
+%
+
+% Useful for algorithms
+\newcommand{\alg}[1]{\textsc{\bfseries \footnotesize #1}}
+
+% For derivatives
+\newcommand{\deriv}[1]{\frac{\mathrm{d}}{\mathrm{d}x} (#1)}
+
+% For partial derivatives
+\newcommand{\pderiv}[2]{\frac{\partial}{\partial #1} (#2)}
+
+% Integral dx
+\newcommand{\dx}{\mathrm{d}x}
+
+% Alias for the Solution section header
+\newcommand{\solution}{\textbf{\large Solution}}
+
+% Probability commands: Expectation, Variance, Covariance, Bias
+\newcommand{\E}{\mathrm{E}}
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\Cov}{\mathrm{Cov}}
+\newcommand{\Bias}{\mathrm{Bias}}
+
+\begin{document}
+
+\maketitle
+\section{Exercise 145}
+\subsection{1.(a)}
+\begin{proof}
+Prove by definition, i.e., $f_1(\alpha x + (1-\alpha) y) \leq \alpha f_1(x) + (1-\alpha)f_1(y)$.
+If there exists $x_i \leq 0$ or $y_i \leq 0$, the proof is trivial. Therefore, we only focus on the case where $x \succ 0$ and $y \succ 0$.
+\begin{align*}
+f_1(\alpha x + (1 - \alpha) y) & = -\prod_i (\alpha x_{i} + (1 - \alpha) y_{i})^{\frac{1}{n}} \\
+&\leq - \prod_i (\alpha x_i)^{\frac{1}{n}} - \prod_i ((1-\alpha) y_i)^{\frac{1}{n}}\\
+&= -\alpha \prod_i ( x_i)^{\frac{1}{n}} - (1-\alpha)\prod_i ( y_i)^{\frac{1}{n}}\\
+&= \alpha f_1(x) + (1-\alpha)f_1(y)
+\end{align*}
+\end{proof}
+
+\subsection{1.(b)}
+\begin{proof}
+
+\begin{align*}
+\alpha f_2(x) + (1 - \alpha) f_2(y) = & \alpha \ln(e^{x_{1}} + \ldots + e^{x_{n}}) + (1 - \alpha) \ln(e^{y_{1}} + \ldots + e^{y_{n}}) \\
+= & \ln (e^{x_{1}} + \ldots + e^{x_{n}})^\alpha (e^{y_{1}} + \ldots + e^{y_{n}})^{1 - \alpha} \\
+\ge & \ln(e^{\alpha x_{1} + (1 - \alpha) y_{1}} + \ldots + e^{\alpha x_{n} + (1 - \alpha) y_{n}}) \\
+= & f_2(\alpha x + (1 - \alpha) y)
+\end{align*}
+\end{proof}
+
+\subsection{1.(c)}
+\begin{proof}
+Since Hessian matrix of $g(x) = x^TAx$ is p.s.d., it is a convex function. Besides, $h(y) = e^{\beta y}$ is a convex function and monotonically increasing as well. We can conclude that $f_4(x) = h(g(x))$ is convex.
+\end{proof}
+
+\subsection{2.}
+\begin{proof}
+\begin{align*}
+LHS = \exp(\sum_i \alpha_i ln x_i) &\leq \exp( ln \sum_i \alpha_i x_i) = RHS
+\end{align*}
+where the inequality holds thanks to Jasen inequality and therefore the equality holds iff. $x_1 = x_2= ...= X_n$.
+\end{proof}
+\subsection{3.}
+We can easily verify that
+\begin{align*}
+f(y) = \sum_i f_i(y) \ge \sum_i^m f_i(x) + \sum_i^m<g_i, y-x> 
+\end{align*}
+where $g_i$ is the sub-gradient of $f_i$. Therefore, the following holds (while I cannot figure out the other way around)
+$$
+\sum_i \partial f_i \subset \partial \sum_i f_i = \partial f.
+$$
+
+\subsection{4.}
+\begin{proof}
+The proposition can be proved by definition as follows
+\begin{align*}
+f'(x; \alpha \mathbf{y}_1 + (1 - \alpha) \mathbf{y}_2) = & \max_{g \in \partial f(x)} <g, \alpha \mathbf{y}_1 + (1 - \alpha) \mathbf{y}_2> \\
+\leq & \alpha \max_{g \in \partial f(x)} <g, \mathbf{y}_1> + (1 - \alpha)\max_{g \in \partial f(x)} <g, \mathbf{y}_2> \\
+= & \alpha f'(x;\mathbf{y}_1) + (1 - \alpha) f'(x;\mathbf{y}_2)
+\end{align*}
+\end{proof}
+
+\section{5.}
+The sub-gradient of l2-norm is 
+\begin{equation}
+\partial ||x||_2 = \lbrace 
+\begin{array}{cc}
+\frac{x}{||x||_2} & if \ x \neq 0 \\
+\{g | \Vert g \Vert_2 \leq 1\} & if \ x = 0
+\end{array}
+\end{equation}
+
+\subsection{6.}
+Again, the proposition can be proved by definition as follows
+
+\begin{align*}
+    f^*(\alpha \mathbf{y}_1 + (1 - \alpha) \mathbf{y}_2) = & \sup_{\mathbf{x} \in C}(<\mathbf{x}, \alpha \mathbf{y}_1 + (1 - \alpha) \mathbf{y}_2> - f(\mathbf{x})) \\
+= & \sup_{\mathbf{x} \in C}(<\mathbf{x}, \alpha \mathbf{y}_1 + (1 - \alpha) \mathbf{y}_2> - (\alpha + 1 - \alpha)f(\mathbf{x})) \\
+\leq & \sup_{\mathbf{x} \in C}(<\mathbf{x}, \alpha \mathbf{y}_1 - \alpha f(\mathbf{x})) + \sup_{\mathbf{x} \in C}(<\mathbf{x}, (1 - \alpha) \mathbf{y}_2> - (1 - \alpha)f(\mathbf{x})) \\
+= & \alpha f^*(\mathbf{y}_1) + (1 - \alpha) f^*(\mathbf{y}_2)
+\end{align*}
+
+\subsection{7.}
+We can first verify that the conjugate function of $f(x) = \frac{1}{2} x^TAx$ is $f^*(y) = \frac{1}{2} y^TA^{-1}y$ as follows. By definition, $f^*(y) = sup\{\langle x,y\rangle - \frac{1}{2}x^TAx\}$ with the following fact
+$$
+\frac{\partial \langle x,y\rangle -\frac{1}{2} x^TAx}{\partial x} = y - \frac{1}{2}(A+A^T)x = y - Ax \triangleq 0
+$$
+which implies that it reaches supreme when $x = A^{-1}y$. Then, $f^*(y) = \frac{1}{2}(A^{-1}y)^TA(A^{-1}y) = \frac{1}{2} y^TA^{-1}y$.
+
+Therefore, thanks to Fenchel inequality,
+\begin{align*}
+    f(x) +f^{*}(y-b)& \geq \langle x,y-b\rangle \\
+    \frac{1}{2}x^TAx + \frac{1}{2} (y-b)^TA^{-1}(y-b)& \geq \langle x,y\rangle - b^Tx \\
+    \frac{1}{2}x^TAx + b^Tx  + \frac{1}{2} (y-b)^TA^{-1}(y-b)& \geq \langle x,y\rangle \\
+\end{align*}
+
+\section{Exercise 148}
+
+\subsection{2.}
+We first note that
+$$E_cf(x)=inf_w\{f(w)+\frac{1}{2c}\parallel w-x \parallel^2\}=inf_w\{\parallel w \parallel +\frac{1}{2c} \parallel w-x \parallel^2\}$$ 
+
+The critic point of $\parallel w \parallel +\frac{1}{2c} \parallel w-x \parallel^2$ satisfies $\frac{w}{\parallel w \parallel}+ \frac{1}{c}(w-x)=0$.
+
+Thus, $$w^* = P_c f(x)= (\parallel x \parallel - c)\frac{x}{\parallel x \parallel}=x - \frac{cx}{\parallel x \parallel}$$ $$E_cf(x)=\parallel x \parallel - \frac{c}{2}$$
+\subsection{3.} 
+Assuming $f(x) = g(\lambda x + a)$, we have
+\begin{align*}
+    & P_cf(x)\\
+    = & argmin_w\{f(w)+\frac{1}{2c}\parallel w-x \parallel ^2\}\\
+    = & aigmin_w\{g(\lambda w+a)+\frac{1}{2c}\parallel w-x \parallel ^2 \}\\
+    = & \frac{1}{\lambda}[-a + argmin_t\{g(t)+\frac{1}{2c}\parallel \frac{t-a}{\lambda}-x \parallel ^2\}]\\
+    = & \frac{1}{\lambda}[-a + argmin_t\{g(t)+\frac{1}{2c\lambda^2}\parallel t-(a+\lambda x) \parallel ^2\}]\\
+    = & \frac{1}{\lambda}[-a + P_c(\lambda^2g)(\lambda x+a)]
+\end{align*}
+
+
+\subsection{4.}
+\begin{proof}
+Similarly, assuming $f(x)=\lambda g(x/ \lambda)$, we have the following
+\begin{align*}
+    & P_cf(x)\\
+    = & arg\min_w\{f(w)+\frac{1}{2c}\parallel w-x \parallel ^2\}\\
+    = & arg\min_w\{\lambda g(w/\lambda)+\frac{1}{2c}\parallel w-x \parallel ^2\}\\
+    = & \lambda arg\min_t\{\lambda g(t)+\frac{1}{2c}\parallel \lambda t-x \parallel ^2\}\\
+    = & \lambda arg\min_t\{g(t)/\lambda +\frac{1}{2c}\parallel  t-x/\lambda \parallel ^2\}\\
+    = & \lambda P_c(g/\lambda)(x/\lambda)
+\end{align*}
+\end{proof}
+
+\end{document}

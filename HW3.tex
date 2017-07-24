@@ -1,0 +1,169 @@
+\documentclass{article}
+
+\usepackage{fancyhdr}
+\usepackage{extramarks}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{tikz}
+\usepackage[plain]{algorithm}
+\usepackage{algpseudocode}
+
+%
+% Basic Document Settings
+%
+
+\topmargin=-0.45in
+\evensidemargin=0in
+\oddsidemargin=0in
+\textwidth=6.5in
+\textheight=9.0in
+\headsep=0.25in
+
+\linespread{1.2}
+
+\pagestyle{fancy}
+\rhead{\hmwkAuthorName}
+\lhead{\hmwkClass: \hmwkTitle}
+
+
+\renewcommand\headrulewidth{0.4pt}
+\renewcommand\footrulewidth{0.4pt}
+\renewcommand{\proofname}{\textit{\textbf{ Proof.}}}
+
+% \setlength\parindent{0pt}
+
+%
+% Create Problem Sections
+%
+
+\newcommand{\enterProblemHeader}[1]{
+    \nobreak\extramarks{}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+    \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+}
+
+\newcommand{\exitProblemHeader}[1]{
+    \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+    \stepcounter{#1}
+    \nobreak\extramarks{Problem \arabic{#1}}{}\nobreak{}
+}
+
+\setcounter{secnumdepth}{0}
+\newcounter{partCounter}
+\newcounter{homeworkProblemCounter}
+\setcounter{homeworkProblemCounter}{1}
+\nobreak\extramarks{Problem \arabic{homeworkProblemCounter}}{}\nobreak{}
+
+%
+% Homework Problem Environment
+%
+% This environment takes an optional argument. When given, it will adjust the
+% problem counter. This is useful for when the problems given for your
+% assignment aren't sequential. See the last 3 problems of this template for an
+% example.
+%
+\newenvironment{homeworkProblem}[1][-1]{
+    \ifnum#1>0
+        \setcounter{homeworkProblemCounter}{#1}
+    \fi
+    \section{Problem \arabic{homeworkProblemCounter}}
+    \setcounter{partCounter}{1}
+    \enterProblemHeader{homeworkProblemCounter}
+}{
+    \exitProblemHeader{homeworkProblemCounter}
+}
+
+
+\newcommand{\hmwkTitle}{Assignment 3}
+\newcommand{\hmwkClass}{Manifold Learning and Sparse Representation}
+\newcommand{\hmwkAuthorName}{\textbf{ZHANG Yuan}, 1601111332 }
+\date{}
+
+
+%
+% Title Page
+%
+
+\title{
+    \textmd{\textbf{\hmwkClass:\ \hmwkTitle}}\\
+}
+
+\author{\hmwkAuthorName}
+
+\renewcommand{\part}[1]{\textbf{\large Part \Alph{partCounter}}\stepcounter{partCounter}\\}
+
+%
+% Various Helper Commands
+%
+
+% Useful for algorithms
+\newcommand{\alg}[1]{\textsc{\bfseries \footnotesize #1}}
+
+% For derivatives
+\newcommand{\deriv}[1]{\frac{\mathrm{d}}{\mathrm{d}x} (#1)}
+
+% For partial derivatives
+\newcommand{\pderiv}[2]{\frac{\partial}{\partial #1} (#2)}
+
+% Integral dx
+\newcommand{\dx}{\mathrm{d}x}
+
+% Alias for the Solution section header
+\newcommand{\solution}{\textbf{\large Solution}}
+
+% Probability commands: Expectation, Variance, Covariance, Bias
+\newcommand{\E}{\mathrm{E}}
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\Cov}{\mathrm{Cov}}
+\newcommand{\Bias}{\mathrm{Bias}}
+
+\begin{document}
+
+\maketitle
+
+%\pagebreak
+\section{Exercise 46.}
+The results are listed in Table 1. (The code in Matlab is attached.) 
+\begin{table}[h]
+\centering
+\begin{tabular}{c|c}
+\hline
+Euclidean distance&0.734042\\
+\hline
+l1 distance&0.668856\\
+\hline
+Angular distance&0.773333\\
+\hline
+Cosine distance&\textbf{0.645510}\\
+\hline
+\end{tabular}
+\end{table}
+
+Thus, \textit{Cosine distance} offers the best dissimilarity metrics in terms of classification.
+\section{Exercise 48.}
+\subsection{Prove $\frac{1}{2}\sum_{i,j} W_{ij}\Vert \mathbf{f_i-f_j}\Vert^2 = tr(\mathbf{F}\mathbf{L}_{W}\mathbf{F}^T)$, where $\mathbf{F} =(\mathbf{f_1,...,f_n})$. }
+\begin{proof}
+\begin{align*}
+\frac{1}{2}\sum_{i,j} W_{ij} \Vert\mathbf{f_i-f_j}\Vert^2 &= 
+\frac{1}{2}\sum_{i,j}  W_{ij} (\mathbf{f_i-f_j})^T (\mathbf{f_i-f_j}) \\
+&= \frac{1}{2}\sum_{i,j}  W_{ij} (\mathbf{f_i^Tf_i+f_j^Tf_j-f_{i}^Tf_{j}-f_{j}^Tf_{i}}) \\
+&= \sum_{i} (\sum_{j} W_{ij})\mathbf{f_{i}}^T \mathbf{f_{i}} - \sum_{i,j} W_{ij}\mathbf{f_{j}}^T \mathbf{f_{i}}\\
+&= \sum_{i} d_i\mathbf{f_{i}}^T \mathbf{f_{i}} - \sum_{i,j} W_{ij}\mathbf{f_{j}}^T \mathbf{f_{i}}\\
+&= tr(\sum_{i}d_{i}\mathbf{f_{i}}^T \mathbf{f_{i}} ) - tr(\sum_{i,j} W_{ij}\mathbf{f_{j}}^T \mathbf{f_{i}})\\
+&=tr(\sum_{i}\mathbf{f_{i}}d_{i}\mathbf{f_{i}}^T ) - tr(\sum_{i,j} \mathbf{f_{i}}W_{ij}\mathbf{f_{j}}^T) \\
+&=tr(\mathbf{FD}_W\mathbf{F}^T) - tr(\mathbf{FWF}^T)\\
+&=tr(\mathbf{F(D}_W-\mathbf W)\mathbf{F}^T)\\
+&=tr(\mathbf{FL}_{W}\mathbf{F}^T)
+\end{align*}
+\end{proof}
+\subsection{Derive the Laplacian matrix of $\frac{1}{2}\sum_{i,j} W_{ij}(f_i-f_j)^2$ under the constrain $\sum_{i}W_{ii}f_i^2 = 1$.}
+Let $\mathbf{g} \triangleq \mathbf D_{W}^{\frac{1}{2}} \mathbf f$ so that the constrain $\sum_{i}W_{ii}f_i^2=1$ deduces to $\Vert \mathbf g \Vert = 1$. Then, we have
+\begin{align*}
+\frac{1}{2}\sum_{i,j} W_{ij}(f_i-f_j)^2 & = \sum_{i}W_{ii}f_i^2 - \sum_{i,j} W_{ij}f_if_j \\
+& = 1 - \mathbf{f}^T \mathbf W \mathbf{f} = \mathbf g^T  \mathbf g - \mathbf g^T \mathbf D^{-\frac{1}{2}}\mathbf W\mathbf D^{-\frac{1}{2}} \mathbf g \\
+&= \mathbf g^T (\mathbf I - \mathbf D^{-\frac{1}{2}}\mathbf W\mathbf D^{-\frac{1}{2}})\mathbf g^T \\
+&\triangleq \mathbf g^T \mathbf{\tilde L}_W \mathbf g^T 
+\end{align*}
+where the Laplaceian matrix $\mathbf{\tilde L}_W = \mathbf I - \mathbf D^{-\frac{1}{2}}\mathbf W\mathbf D^{-\frac{1}{2}}$.
+\end{document}
