@@ -1,1 +1,3 @@
-# Manifold_Learning_and_Sparse_Representation
+# Manifold_Learning_and_Sparse_Representation, Spring 2017
+
+Solutions to weekly HWs...
